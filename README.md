@@ -98,8 +98,32 @@ sudo apt install ros-$ROS_DISTRO-ros2-control ros-$ROS_DISTRO-ros2-controllers
 ```
 
 If the terminal repeatedly prints `TF_OLD_DATA` or `Moved backwards in time`,
-the WSL clock has jumped backwards. Stop the launch, run `wsl --shutdown` from
-Windows PowerShell, reopen WSL, and launch again.
+the WSL clock is repeatedly jumping backwards. This makes TF discard robot
+updates, causing both terminal spam and choppy RViz animation. Stop the launch
+and verify the issue:
+
+```bash
+python3 scripts/check_wsl_clock.py --seconds 20
+```
+
+If it reports backward jumps, first run this from Windows PowerShell:
+
+```powershell
+wsl --shutdown
+wsl --update
+```
+
+Reopen WSL and rerun the check. If backward jumps remain, temporarily disable
+the competing Ubuntu NTP service and synchronize from the virtual hardware
+clock:
+
+```bash
+sudo timedatectl set-ntp false
+sudo hwclock -s
+python3 scripts/check_wsl_clock.py --seconds 20
+```
+
+Re-enable Ubuntu NTP later with `sudo timedatectl set-ntp true` if needed.
 
 ## Important limitations
 
