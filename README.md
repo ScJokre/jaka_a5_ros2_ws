@@ -11,8 +11,9 @@ The original A5 joint geometry, limits, and STL meshes came from:
 
 ## WSL prerequisites
 
-Use Ubuntu 22.04 with ROS 2 Humble or Ubuntu 24.04 with ROS 2 Jazzy. The
-commands below assume ROS 2 and MoveIt 2 are already installed.
+This configuration targets Ubuntu 24.04 with ROS 2 Jazzy, matching the tested
+WSL environment. MoveIt 2 Humble uses an older OMPL parameter format and needs
+a separate `ompl_planning.yaml`.
 
 ```bash
 source /opt/ros/$ROS_DISTRO/setup.bash
@@ -95,6 +96,10 @@ If `mock_components/GenericSystem` is missing:
 ```bash
 sudo apt install ros-$ROS_DISTRO-ros2-control ros-$ROS_DISTRO-ros2-controllers
 ```
+
+If the terminal repeatedly prints `TF_OLD_DATA` or `Moved backwards in time`,
+the WSL clock has jumped backwards. Stop the launch, run `wsl --shutdown` from
+Windows PowerShell, reopen WSL, and launch again.
 
 ## Important limitations
 
