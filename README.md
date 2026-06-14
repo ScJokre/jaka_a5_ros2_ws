@@ -71,6 +71,32 @@ jaka_a5_controller      joint_trajectory_controller/JointTrajectoryController ac
 joint_state_broadcaster joint_state_broadcaster/JointStateBroadcaster         active
 ```
 
+## Add planning-scene obstacles
+
+No MoveIt Setup Assistant changes are required for movable planning-scene
+obstacles. Start the normal demo first:
+
+```bash
+ros2 launch jaka_a5_moveit_config demo.launch.py
+```
+
+Then open another sourced terminal and add the example table and box:
+
+```bash
+ros2 launch jaka_a5_moveit_config obstacles.launch.py
+```
+
+The objects should appear in RViz and MoveIt will include them in collision
+checking. Edit the `OBSTACLES` list in
+`jaka_a5_moveit_config/scripts/add_collision_objects.py` to change each box's
+dimensions and world-frame position, then rebuild the workspace.
+
+Remove the example objects with:
+
+```bash
+ros2 launch jaka_a5_moveit_config obstacles.launch.py remove:=true
+```
+
 ## Basic troubleshooting
 
 If RViz opens but no robot appears:

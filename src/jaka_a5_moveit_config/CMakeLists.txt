@@ -11,5 +11,9 @@ install(
   FILES .setup_assistant
   DESTINATION share/${PROJECT_NAME}
 )
+install(
+  PROGRAMS scripts/add_collision_objects.py
+  DESTINATION lib/${PROJECT_NAME}
+)
 
 ament_package()
